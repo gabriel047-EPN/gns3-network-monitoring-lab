@@ -1,0 +1,179 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Configuración R1-Cisco7200
+
+#configuración de interfaces
+enable
+configure terminal
+interface f0/0
+ip address 10.10.0.1 255.255.255.0
+no shutdown
+do write
+exit
+
+interface g1/0
+ip address 10.10.1.1 255.255.255.252
+no shutdown
+do write
+exit
+
+interface g2/0
+ip address 10.10.2.1 255.255.255.252
+no shutdown
+do write
+exit
+
+#Configuración de enrutamiento 
+router eigrp 100
+network 10.10.0.0 0.0.0.255
+network 10.10.2.0 0.0.0.3
+network 10.10.1.0 0.0.0.3
+no auto-summary
+exit
+
+router ospf 1
+ router-id 1.1.1.1
+ network 10.10.0.0 0.0.0.255 area 0
+ network 10.10.1.0 0.0.0.3 area 0
+ network 10.10.2.0 0.0.0.3 area 0
+ redistribute eigrp 100 subnets
+
+exit
+
+do write
+
+
+
+#Configuración de acceso a SNMP para monitoreo
+access-list 99 permit 10.10.0.0 0.0.0.255
+access-list 99 permit 10.10.1.0 0.0.0.3
+access-list 99 permit 10.10.2.0 0.0.0.3
+snmp-server community EPN ro 99
+snmp-server ifindex persist
+do write
+exit
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Configuración R2-MikroTikCHR7
+
+#configuracion de interfaces
+/ip address add address=10.10.1.2/30 interface=ether1
+/ip address add address=192.168.1.1/24 interface=ether2
+
+#configuracion de enrutamiento
+/routing ospf instance
+add name=v2inst version=2 router-id=10.10.1.2
+
+/routing ospf area
+add name=backbone_v2 area-id=0.0.0.0 instance=v2inst
+
+/routing ospf interface-template
+add networks=10.10.1.0/30 area=backbone_v2
+add networks=192.168.1.0/24 area=backbone_v2
+
+#configuración de SNMP para monitoreo
+/snmp set enabled=yes
+/snmp community add name=EPN addresses=10.0.0.0/24,10.10.1.0/30,192.168.1.0/24 read-access=yes
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Configuración R3-Cisco7200
+
+#configuración de interfaces
+enable
+configure terminal
+interface g1/0
+ip address 10.10.2.2 255.255.255.252
+no shutdown
+do write
+exit
+
+interface f0/0
+ip address  192.168.2.1 255.255.255.0
+no shutdown
+do write
+exit
+
+#Configuración de enrutamiento
+router eigrp 100
+network 10.10.2.0 0.0.0.3
+network 192.168.2.0 0.0.0.255
+no auto-summary 
+do write
+exit
+
+router ospf 1
+ router-id 10.10.2.2
+ network 10.10.2.0 0.0.0.3 area 0
+ network 192.168.2.0 0.0.0.255 area 0
+ redistribute eigrp 100 subnets
+ exit
+do write
+
+
+#Configuración de acceso a SNMP para monitoreo
+access-list 99 permit 10.10.0.0 0.0.0.255
+access-list 99 permit 10.10.2.0 0.0.0.3
+access-list 99 permit 192.168.2.0 0.0.0.255
+snmp-server community EPN ro 99
+snmp-server ifindex persist
+do write
+exit
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Configuración de SW1-MikroTikCRS328
+
+#configuración de interfaces
+/interface bridge add name=bridge1
+/interface bridge port
+add interface=ether1 bridge=bridge1
+add interface=ether2 bridge=bridge1
+add interface=ether3 bridge=bridge1
+
+/ir address add address=192.168.1.2/24 interface=bridge1
+/ip route add dst-address=0.0.0.0/0 gateway=192.168.1.1
+
+
+#configuración de SNMP para monitoreo
+/snmp set enabled=yes
+/snmp community add name=EPN addresses=10.10.1.0/30,192.168.1.0/24,10.10.0.0/24 read-access=yes
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Configuración de SW2-MikroTikCRS328
+
+#configuración de interfaces
+/interface bridge add name=bridge1
+/interface bridge port
+add interface=ether1 bridge=bridge1
+add interface=ether2 bridge=bridge1
+add interface=ether3 bridge=bridge1
+
+/ip address add address=192.168.2.2/24 interface=bridge1
+/ip route add dst-address=0.0.0.0/0 gateway=192.168.2.1
+
+
+#configuración de SNMP para monitoreo
+/snmp set enabled=yes
+/snmp community add name=EPN addresses=10.10.2.0/30,192.168.2.0/24,10.10.0.0/24 read-access=yes
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Configuración de PCs
+PC1
+ip 192.168.1.5/24 192.168.1.1
+save
+
+PC2
+ip 192.168.1.6/24 192.168.1.1
+save
+
+PC3
+ip 192.168.2.3/24 192.168.2.1
+save
+
+PC3
+ip 192.168.2.4/24 192.168.2.1
+save
