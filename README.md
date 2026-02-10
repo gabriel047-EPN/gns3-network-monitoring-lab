@@ -55,16 +55,3 @@ La topología está compuesta por:
 - Validación de conectividad entre segmentos
 - Detección básica de fallos de red
 
-## Qué aprendí
-- Diseño de topologías de red multivendor
-- Configuración de enlaces punto a punto
-- Segmentación de redes LAN
-- Integración de Cacti y Nagios para monitoreo
-- Uso de SNMP en dispositivos Cisco y MikroTik
-- Análisis básico de estado y rendimiento de red
-
-## Posibles mejoras
-- Configuración de alertas por correo
-- Implementación de thresholds en Nagios
-- Monitoreo de CPU y memoria
-- Documentación detallada de SNMP
