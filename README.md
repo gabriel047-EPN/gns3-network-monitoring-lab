@@ -53,11 +53,11 @@ La topología está compuesta por:
 
 ## Evidencia de monitoreo
 
-### Cacti – Tráfico de red
+### Cacti – Dispositivos registrados
 ![Cacti Dashboard](screenshots/cacti-dashboard.jpg)
 
 ### Nagios – Estado general
-![Nagios Dashboard](screenshots/nagios-dashboard.jpg)
+![Nagios Dashboard](screenshots/monitoring-devices-2.jpg)
 
 ### Dispositivos monitoreados
 ![Monitored Devices](screenshots/monitoring-devices-1.jpg)
