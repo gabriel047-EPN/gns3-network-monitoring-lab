@@ -18,7 +18,7 @@ La topología está compuesta por:
 - Hosts finales en dos redes LAN
 - Servidor Ubuntu para monitoreo (Cacti y Nagios)
 
-![Network Topology](topology/gns3-topology.png)
+![Network Topology](topology/gns3-topology.jpg)
 
 ## Direccionamiento IP
 - Red de monitoreo: `10.10.0.0/24`
