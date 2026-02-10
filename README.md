@@ -57,7 +57,7 @@ La topología está compuesta por:
 ![Cacti Dashboard](screenshots/cacti-dashboard.jpg)
 
 ### Nagios – Estado general
-![Nagios Dashboard](screenshots/monitoring-devices-2.jpg)
+![Nagios Dashboard](screenshots/nagios-dashboard.jpg)
 
 ### Dispositivos monitoreados
 ![Monitored Devices](screenshots/monitoring-devices-1.jpg)
