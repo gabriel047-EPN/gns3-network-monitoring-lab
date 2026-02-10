@@ -1,7 +1,7 @@
 # GNS3 – Multivendor Network Monitoring with Cacti and Nagios
 
 ## Descripción
-Proyecto de laboratorio desarrollado en GNS3 que simula una red pequeña
+Proyecto de aprendizaje desarrollado en GNS3 que simula una red pequeña
 multivendor (Cisco y MikroTik), incorporando monitoreo de red mediante
 Cacti y Nagios desde un servidor Ubuntu.
 
