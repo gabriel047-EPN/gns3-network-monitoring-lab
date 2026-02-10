@@ -5,7 +5,7 @@ Proyecto de laboratorio desarrollado en GNS3 que simula una red pequeña
 multivendor (Cisco y MikroTik), incorporando monitoreo de red mediante
 Cacti y Nagios desde un servidor Ubuntu.
 
-El objetivo del laboratorio es practicar diseño de red, conectividad,
+El objetivo del laboratorio es practicar diseño de red, conectividad
 y monitoreo de infraestructura TI en un entorno similar a uno real.
 
 ## Topología de red
@@ -39,19 +39,32 @@ La topología está compuesta por:
 - SNMP
 
 ## Monitoreo implementado
+
 ### Cacti
-- Monitoreo de tráfico de interfaces
-- Recolección de métricas vía SNMP
-- Visualización de uso de ancho de banda
+- Monitoreo de tráfico de interfaces de red
+- Recolección de métricas mediante SNMP
+- Visualización del uso de ancho de banda
 
 ### Nagios
-- Monitoreo de disponibilidad de routers y hosts
-- Verificación de conectividad (ping)
+- Monitoreo de disponibilidad de routers y switches
+- Verificación de conectividad mediante ICMP (PING)
+- Monitoreo de uptime vía SNMP
 - Detección de caídas de dispositivos
+
+## Evidencia de monitoreo
+
+### Cacti – Tráfico de red
+![Cacti Dashboard](screenshots/cacti-dashboard.jpg)
+
+### Nagios – Estado general
+![Nagios Dashboard](screenshots/nagios-dashboard.jpg)
+
+### Dispositivos monitoreados
+![Monitored Devices](screenshots/monitoring-devices-1.jpg)
 
 ## Funcionalidades
 - Monitoreo centralizado desde servidor Ubuntu
-- Supervisión de dispositivos multivendor
-- Validación de conectividad entre segmentos
+- Supervisión de dispositivos multivendor (Cisco y MikroTik)
+- Validación de conectividad entre segmentos de red
 - Detección básica de fallos de red
-
+- Análisis del estado y rendimiento de la infraestructura
